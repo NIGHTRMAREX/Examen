@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analizador CURP</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            background-color: #b31c1c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #000000;
+        }
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #c61515;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Analizador de CURP</h2>
+    <form method="post">
+        <input type="text" name="curp" placeholder="Ingresa la CURP" required>
+        <button type="submit">Analizar</button>
+    </form>
+
+    {% if tokens %}
+        <table>
+            <tr>
+                <th>Token</th>
+                <th>Tipo</th>
+            </tr>
+            {% for token in tokens %}
+                <tr>
+                    <td>{{ token.Token }}</td>
+                    <td>{{ token.Tipo }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p style="text-align: center; margin-top: 10px;">Total de tokens: {{ tokens|length }}</p>
+    {% endif %}
+
+    {% if errores %}
+        <div class="error">
+            <p>Errores encontrados:</p>
+            <ul>
+                {% for error in errores %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% elif error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
